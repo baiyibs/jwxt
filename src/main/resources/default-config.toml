@@ -1,0 +1,7 @@
+[browser]
+headless = false
+slowMo = 100
+
+[account]
+username = ""
+password = ""
