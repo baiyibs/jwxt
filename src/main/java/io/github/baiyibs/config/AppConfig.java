@@ -1,5 +1,6 @@
 package io.github.baiyibs.config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -8,6 +9,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class AppConfig {
+    @JsonProperty("OCR_API_URL")
+    private String ocrApiUrl;
     private Account account;
     private BrowserConfig browser = new BrowserConfig();
 

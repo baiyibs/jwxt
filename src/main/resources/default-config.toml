@@ -1,3 +1,5 @@
+OCR_API_URL = "https://flask-ddddocr-api.vercel.app/api/ocr"
+
 [browser]
 headless = false
 slowMo = 100

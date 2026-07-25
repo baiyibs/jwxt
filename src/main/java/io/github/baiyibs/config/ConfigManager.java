@@ -42,7 +42,7 @@ public class ConfigManager {
             // 从外部加载配置文件
             if (Files.exists(EXTERNAL_PATH)) {
                 this.config = MAPPER.readValue(EXTERNAL_PATH.toFile(), AppConfig.class);
-                log.info("[Config] 加载配置文件: {}", EXTERNAL_PATH);
+                log.info("加载配置文件: {}", EXTERNAL_PATH);
                 return;
             }
             // 保存默认配置到本地
@@ -53,8 +53,8 @@ public class ConfigManager {
                     throw new IllegalStateException("没有找到默认配置文件: " + DEFAULT_RESOURCE);
                 }
                 Files.copy(inputStream, EXTERNAL_PATH, StandardCopyOption.REPLACE_EXISTING);
-                log.info("[Config] 默认配置文件已复制到: {}", EXTERNAL_PATH);
-                log.warn("[Config] 请修改配置后再启动程序。");
+                log.info("默认配置文件已复制到: {}", EXTERNAL_PATH);
+                log.warn("请修改配置后再启动程序。");
                 System.exit(0);
             }
         } catch (IOException e) {
@@ -63,13 +63,13 @@ public class ConfigManager {
     }
 
     private static void failLoading() {
-        log.error("[Config] 没有找到默认配置文件: {}", DEFAULT_RESOURCE);
+        log.error("没有找到默认配置文件: {}", DEFAULT_RESOURCE);
     }
 
     public void save() throws IOException {
         Files.createDirectories(EXTERNAL_PATH.getParent());
         MAPPER.writeValue(EXTERNAL_PATH.toFile(), config);
-        log.info("[Config] 已将配置保存到: {}", EXTERNAL_PATH);
+        log.info("已将配置保存到: {}", EXTERNAL_PATH);
     }
 
     public void saveAndUpdate(AppConfig newConfig) throws IOException {
@@ -80,7 +80,7 @@ public class ConfigManager {
     public void reload() throws IOException {
         if (Files.exists(EXTERNAL_PATH)) {
             this.config = MAPPER.readValue(EXTERNAL_PATH.toFile(), AppConfig.class);
-            log.info("[Config] 已重载配置文件: {}", EXTERNAL_PATH);
+            log.info("已重载配置文件: {}", EXTERNAL_PATH);
         } else {
             loadConfig();
         }
