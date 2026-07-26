@@ -4,9 +4,12 @@ import com.microsoft.playwright.*;
 import io.github.baiyibs.config.BrowserConfigLoader;
 import io.github.baiyibs.config.ConfigManager;
 import io.github.baiyibs.config.AppConfig;
-import io.github.baiyibs.util.CaptchaClient;
+import io.github.baiyibs.service.CaptchaService;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.extern.slf4j.Slf4j;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Slf4j
 public class Main {
@@ -44,9 +47,12 @@ public class Main {
 
     private static void fillCaptchaCode(Page page) {
         int maxRetriesCount = 3;
+        Path imagePath = Paths.get(System.getProperty("user.dir"),"captcha.png");
         for (int retries = 1; retries <= maxRetriesCount; retries++) {
-            byte[] captchaBytes = page.locator("#SafeCodeImg").screenshot();
-            String code = CaptchaClient.recognizeCaptcha(captchaBytes);
+            page.locator("#SafeCodeImg")
+                    .screenshot(new Locator.ScreenshotOptions()
+                            .setPath(imagePath));
+            String code = CaptchaService.recognize(imagePath.toFile());
             if (code != null) {
                 if (code.length() == 4) {
                     log.info("识别到验证码: {}", code);

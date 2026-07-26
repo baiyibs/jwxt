@@ -1,4 +1,4 @@
-OCR_API_URL = "https://flask-ddddocr-api.vercel.app/api/ocr"
+OCR_API_URL = "https://ddddocr-fastapi.vercel.app/ocr"
 
 [browser]
 headless = false
