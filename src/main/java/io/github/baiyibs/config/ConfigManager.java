@@ -65,7 +65,6 @@ public class ConfigManager {
                 newConfig.getAccount().setPassword(scanner.nextLine());
 
                 saveAndUpdate(newConfig);
-                System.exit(1);
             }
         } catch (IOException e) {
             throw new RuntimeException("加载配置失败: {}", e);

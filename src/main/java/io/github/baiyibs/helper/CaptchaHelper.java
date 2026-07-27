@@ -2,7 +2,6 @@ package io.github.baiyibs.helper;
 
 import io.github.baiyibs.service.CaptchaService;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.util.function.Supplier;
 

@@ -5,12 +5,12 @@ import io.github.baiyibs.config.BrowserConfigLoader;
 import io.github.baiyibs.config.ConfigManager;
 import io.github.baiyibs.config.AppConfig;
 import io.github.baiyibs.helper.CaptchaHelper;
+import io.github.baiyibs.utli.ImageViewer;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -18,6 +18,7 @@ import java.util.Scanner;
 
 @Slf4j
 public class Main {
+
     public static void main(String[] args) {
         // 加载配置文件
         ConfigManager configManager = ConfigManager.getInstance();
@@ -78,12 +79,7 @@ public class Main {
 
         if (code == null) {
             File file = screenshotElement(locator, imagePath);
-            try {
-                Desktop.getDesktop().open(file);
-            } catch (IOException e) {
-                log.error("手动输入失败!");
-                System.exit(1);
-            }
+            ImageViewer.show(file);
             System.out.print("请手动输入验证码: ");
             Scanner scanner = new Scanner(System.in);
             code = scanner.nextLine();
