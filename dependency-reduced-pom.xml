@@ -20,6 +20,7 @@
                 <transformer>
                   <mainClass>io.github.baiyibs.Main</mainClass>
                 </transformer>
+                <transformer />
               </transformers>
               <filters>
                 <filter>
@@ -33,18 +34,6 @@
                     <exclude>META-INF/*.RSA</exclude>
                     <exclude>META-INF/LICENSE</exclude>
                     <exclude>META-INF/NOTICE</exclude>
-                  </excludes>
-                </filter>
-                <filter>
-                  <artifact>com.microsoft.playwright:driver-bundle</artifact>
-                  <excludes>
-                    <exclude>**</exclude>
-                  </excludes>
-                </filter>
-                <filter>
-                  <artifact>com.microsoft.playwright:driver</artifact>
-                  <excludes>
-                    <exclude>**</exclude>
                   </excludes>
                 </filter>
               </filters>
