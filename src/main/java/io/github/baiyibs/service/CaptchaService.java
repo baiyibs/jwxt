@@ -26,12 +26,6 @@ public class CaptchaService {
         this.ocrApiUrl = ConfigManager.getInstance().getConfig().getOcrApiUrl();
     }
 
-    public CaptchaService(OkHttpClient client, ObjectMapper mapper, String ocrApiUrl) {
-        this.client = client;
-        this.mapper = mapper;
-        this.ocrApiUrl = ocrApiUrl;
-    }
-
     /**
      * 识别验证码
      * @param imageFile 验证码图片
