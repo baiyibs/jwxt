@@ -11,7 +11,6 @@ public class BrowserConfigLoader {
     public static BrowserType.LaunchOptions loadLaunchOptions(AppConfig config) {
         AppConfig.BrowserConfig browserConfig = config.getBrowser();
         return new BrowserType.LaunchOptions()
-                .setHeadless(browserConfig.isHeadless())
-                .setSlowMo(browserConfig.getSlowMo());
+                .setHeadless(browserConfig.isHeadless());
     }
 }
