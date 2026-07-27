@@ -5,7 +5,6 @@ import io.github.baiyibs.config.BrowserConfigLoader;
 import io.github.baiyibs.config.ConfigManager;
 import io.github.baiyibs.config.AppConfig;
 import io.github.baiyibs.helper.CaptchaHelper;
-import io.github.baiyibs.service.CaptchaService;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.extern.slf4j.Slf4j;
 
