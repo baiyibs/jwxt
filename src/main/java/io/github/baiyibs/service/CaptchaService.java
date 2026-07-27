@@ -2,6 +2,7 @@ package io.github.baiyibs.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.baiyibs.config.ConfigManager;
+import io.github.baiyibs.exception.OcrException;
 import io.github.baiyibs.model.OcrResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -31,7 +32,7 @@ public class CaptchaService {
      * @param imageFile 验证码图片
      * @return 识别出的验证码字符串
      */
-    public String recognize(File imageFile) {
+    public String recognize(File imageFile) throws IOException, OcrException {
         RequestBody fileBody = RequestBody.create(
                 imageFile,
                 MediaType.get("image/png")
@@ -50,22 +51,16 @@ public class CaptchaService {
         try (Response response = client.newCall(request).execute()) {
             String responseBody = response.body().string();
             if (!response.isSuccessful()) {
-                log.error("HTTP 请求失败，状态码: {}, 响应: {}", response.code(), responseBody);
-                return null;
+                throw new IOException(String.format("HTTP %d: %s", response.code(), responseBody));
             }
 
             OcrResponse result = mapper.readValue(responseBody, OcrResponse.class);
 
-            if (result.getCode() == 200) {
-                return result.getData();
-            } else {
-                log.error("识别失败，状态码: {}, 错误信息: {}", result.getCode(), result.getMessage());
-                return null;
+            if (result.getCode() != 200) {
+                throw new OcrException(String.format("请求错误 %d: %s", result.getCode(), result.getMessage()));
             }
-
-        } catch (IOException e) {
-            log.error("发生错误: {}", e.getMessage());
-            return null;
+            return result.getData();
         }
     }
+
 }

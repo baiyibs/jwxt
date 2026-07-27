@@ -4,10 +4,12 @@ import com.microsoft.playwright.*;
 import io.github.baiyibs.config.BrowserConfigLoader;
 import io.github.baiyibs.config.ConfigManager;
 import io.github.baiyibs.config.AppConfig;
+import io.github.baiyibs.helper.CaptchaHelper;
 import io.github.baiyibs.service.CaptchaService;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -48,28 +50,26 @@ public class Main {
     private static void fillCaptchaCode(Page page) {
         int maxRetriesCount = 3;
         Path imagePath = Paths.get(System.getProperty("user.dir"),"captcha.png");
-        CaptchaService captchaService = new CaptchaService();
+        CaptchaService service = new CaptchaService();
+        CaptchaHelper helper = new CaptchaHelper(service, 3);
 
-        for (int retries = 1; retries <= maxRetriesCount; retries++) {
+        String code = helper.recognizeWithRetry(() -> {
+            // 刷新验证码
+            page.click("#SafeCodeImg");
+            // 等待验证码出现
+            page.locator("#SafeCodeImg").waitFor();
+            // 对验证码进行截图
             page.locator("#SafeCodeImg")
                     .screenshot(new Locator.ScreenshotOptions()
                             .setPath(imagePath));
-            String code = captchaService.recognize(imagePath.toFile());
-            if (code != null) {
-                if (code.length() == 4) {
-                    log.info("识别到验证码: {}", code);
-                    page.locator("#RANDOMCODE").fill(code);
-                    return;
-                } else {
-                    log.warn("验证码长度错误({}), 准备重试...", code.length());
-                }
-            } else {
-                log.warn("识别验证码失败, 准备重试...");
-            }
-            // 刷新验证码
-            page.locator("#SafeCodeImg").click();
+            File file = new File(imagePath.toUri());
+            return (file.exists() && file.length() > 0) ? file : null;
+        }, 4);
+
+        if (code == null) {
+            System.exit(1);
         }
-        log.error("识别验证码失败（超过最大重试次数），程序终止。");
-        System.exit(1);
+
+        page.locator("#RANDOMCODE").fill(code);
     }
 }
