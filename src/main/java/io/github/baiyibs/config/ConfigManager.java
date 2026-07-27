@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class ConfigManager {
     private static final ObjectMapper MAPPER = new YAMLMapper()
             .disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
-            .enable(SerializationFeature.INDENT_OUTPUT);;
+            .enable(SerializationFeature.INDENT_OUTPUT);
 
     private static final String DEFAULT_RESOURCE = "default-config.yaml";
     private final Path EXTERNAL_PATH = Paths.get(System.getProperty("user.dir"), "config", "config.yaml");
