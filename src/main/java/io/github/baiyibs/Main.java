@@ -48,10 +48,8 @@ public class Main {
     }
 
     private static void fillCaptchaCode(Page page) {
-        int maxRetriesCount = 3;
         Path imagePath = Paths.get(System.getProperty("user.dir"),"captcha.png");
-        CaptchaService service = new CaptchaService();
-        CaptchaHelper helper = new CaptchaHelper(service, 3);
+        CaptchaHelper helper = new CaptchaHelper();
 
         String code = helper.recognizeWithRetry(() -> {
             // 刷新验证码
