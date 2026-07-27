@@ -48,11 +48,13 @@ public class Main {
     private static void fillCaptchaCode(Page page) {
         int maxRetriesCount = 3;
         Path imagePath = Paths.get(System.getProperty("user.dir"),"captcha.png");
+        CaptchaService captchaService = new CaptchaService();
+
         for (int retries = 1; retries <= maxRetriesCount; retries++) {
             page.locator("#SafeCodeImg")
                     .screenshot(new Locator.ScreenshotOptions()
                             .setPath(imagePath));
-            String code = CaptchaService.recognize(imagePath.toFile());
+            String code = captchaService.recognize(imagePath.toFile());
             if (code != null) {
                 if (code.length() == 4) {
                     log.info("识别到验证码: {}", code);

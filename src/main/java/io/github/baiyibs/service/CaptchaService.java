@@ -12,22 +12,32 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class CaptchaService {
-    private static final OkHttpClient client = new OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .build();
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final String OCR_API_URL = ConfigManager.getInstance().getConfig().getOcrApiUrl();
+    private final OkHttpClient client;
+    private final ObjectMapper mapper;
+    private final String ocrApiUrl;
 
-    private CaptchaService() {}
+    public CaptchaService() {
+        this.client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build();
+        this.mapper = new ObjectMapper();
+        this.ocrApiUrl = ConfigManager.getInstance().getConfig().getOcrApiUrl();
+    }
+
+    public CaptchaService(OkHttpClient client, ObjectMapper mapper, String ocrApiUrl) {
+        this.client = client;
+        this.mapper = mapper;
+        this.ocrApiUrl = ocrApiUrl;
+    }
 
     /**
      * 识别验证码
      * @param imageFile 验证码图片
      * @return 识别出的验证码字符串
      */
-    public static String recognize(File imageFile) {
+    public String recognize(File imageFile) {
         RequestBody fileBody = RequestBody.create(
                 imageFile,
                 MediaType.get("image/png")
@@ -39,7 +49,7 @@ public class CaptchaService {
                 .build();
 
         Request request = new Request.Builder()
-                .url(OCR_API_URL)
+                .url(ocrApiUrl)
                 .post(requestBody)
                 .build();
 
