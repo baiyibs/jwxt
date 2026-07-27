@@ -1,9 +1,0 @@
-# OCR 识别服务器 （项目地址: https://github.com/sml2h3/ddddocr-fastapi）
-OCR_API_URL = "https://ddddocr-fastapi.vercel.app/ocr"
-
-[browser]           # 浏览器设置
-headless = false    # 是否使用无头模式
-
-[account]
-username = ""       # 账号
-password = ""       # 密码

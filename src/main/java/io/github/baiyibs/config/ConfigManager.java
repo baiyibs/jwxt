@@ -1,6 +1,8 @@
 package io.github.baiyibs.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.toml.TomlMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,14 +11,16 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.util.Scanner;
 
 @Slf4j
 public class ConfigManager {
-    private static final ObjectMapper MAPPER = new TomlMapper();
+    private static final ObjectMapper MAPPER = new YAMLMapper()
+            .disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER)
+            .enable(SerializationFeature.INDENT_OUTPUT);;
 
-    private static final String DEFAULT_RESOURCE = "default-config.toml";
-    private final Path EXTERNAL_PATH = Paths.get(System.getProperty("user.dir"), "config", "config.toml");
+    private static final String DEFAULT_RESOURCE = "default-config.yaml";
+    private final Path EXTERNAL_PATH = Paths.get(System.getProperty("user.dir"), "config", "config.yaml");
 
     private static volatile ConfigManager instance;
     @Getter
@@ -52,10 +56,16 @@ public class ConfigManager {
                     failLoading();
                     throw new IllegalStateException("没有找到默认配置文件: " + DEFAULT_RESOURCE);
                 }
-                Files.copy(inputStream, EXTERNAL_PATH, StandardCopyOption.REPLACE_EXISTING);
-                log.info("默认配置文件已复制到: {}", EXTERNAL_PATH);
-                log.warn("请修改配置后再启动程序。");
-                System.exit(0);
+
+                AppConfig newConfig = MAPPER.readValue(inputStream, AppConfig.class);
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("请输入账号: ");
+                newConfig.getAccount().setUsername(scanner.nextLine());
+                System.out.print("请输入密码: ");
+                newConfig.getAccount().setPassword(scanner.nextLine());
+
+                saveAndUpdate(newConfig);
+                System.exit(1);
             }
         } catch (IOException e) {
             throw new RuntimeException("加载配置失败: {}", e);
