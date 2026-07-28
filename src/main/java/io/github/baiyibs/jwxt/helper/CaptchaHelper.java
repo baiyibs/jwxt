@@ -1,6 +1,6 @@
-package io.github.baiyibs.helper;
+package io.github.baiyibs.jwxt.helper;
 
-import io.github.baiyibs.service.CaptchaService;
+import io.github.baiyibs.jwxt.service.CaptchaService;
 import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.util.function.Supplier;

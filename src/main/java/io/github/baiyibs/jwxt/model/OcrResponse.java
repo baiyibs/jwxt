@@ -1,4 +1,4 @@
-package io.github.baiyibs.model;
+package io.github.baiyibs.jwxt.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

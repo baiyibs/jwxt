@@ -1,15 +1,14 @@
-package io.github.baiyibs;
+package io.github.baiyibs.jwxt;
 
 import com.microsoft.playwright.*;
-import io.github.baiyibs.config.BrowserConfigLoader;
-import io.github.baiyibs.config.ConfigManager;
-import io.github.baiyibs.config.AppConfig;
-import io.github.baiyibs.helper.CaptchaHelper;
-import io.github.baiyibs.utli.ImageViewer;
+import io.github.baiyibs.jwxt.config.BrowserConfigLoader;
+import io.github.baiyibs.jwxt.config.ConfigManager;
+import io.github.baiyibs.jwxt.config.AppConfig;
+import io.github.baiyibs.jwxt.helper.CaptchaHelper;
+import io.github.baiyibs.jwxt.utli.ImageViewer;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.extern.slf4j.Slf4j;
 
-import java.awt.*;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +16,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 @Slf4j
-public class Main {
+public class App {
 
     public static void main(String[] args) {
         // 加载配置文件

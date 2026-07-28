@@ -18,7 +18,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>io.github.baiyibs.Main</mainClass>
+                  <mainClass>io.github.baiyibs.jwxt.App</mainClass>
                 </transformer>
                 <transformer />
               </transformers>

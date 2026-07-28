@@ -1,4 +1,4 @@
-package io.github.baiyibs.config;
+package io.github.baiyibs.jwxt.config;
 
 import com.microsoft.playwright.BrowserType;
 

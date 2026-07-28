@@ -1,9 +1,9 @@
-package io.github.baiyibs.service;
+package io.github.baiyibs.jwxt.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.baiyibs.config.ConfigManager;
-import io.github.baiyibs.exception.OcrException;
-import io.github.baiyibs.model.OcrResponse;
+import io.github.baiyibs.jwxt.config.ConfigManager;
+import io.github.baiyibs.jwxt.exception.OcrException;
+import io.github.baiyibs.jwxt.model.OcrResponse;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 

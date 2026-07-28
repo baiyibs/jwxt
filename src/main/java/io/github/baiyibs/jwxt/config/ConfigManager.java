@@ -1,4 +1,4 @@
-package io.github.baiyibs.config;
+package io.github.baiyibs.jwxt.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;

@@ -1,4 +1,4 @@
-package io.github.baiyibs.utli;
+package io.github.baiyibs.jwxt.utli;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jline.terminal.Terminal;
