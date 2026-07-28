@@ -5,7 +5,9 @@ import io.github.baiyibs.jwxt.config.BrowserConfigLoader;
 import io.github.baiyibs.jwxt.config.ConfigManager;
 import io.github.baiyibs.jwxt.config.AppConfig;
 import io.github.baiyibs.jwxt.helper.CaptchaHelper;
+import io.github.baiyibs.jwxt.model.Student;
 import io.github.baiyibs.jwxt.utli.ImageViewer;
+import io.github.baiyibs.jwxt.utli.StudentParser;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,11 +33,17 @@ public class App {
             Page page = browserContext.newPage();
 
             browserContext.onFrameNavigated(frame -> log.info("访问 -> {}", frame.url()));
-
+            // 登录
             Login(page, config);
 
+            Student student = getStudentInfo(page);
+            if (student != null) {
+                log.info(student.toString());
+            }
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            log.error("初始化浏览器失败: {}", e.getMessage());
+            System.exit(1);
         }
     }
 
@@ -91,5 +99,17 @@ public class App {
         locator.screenshot(new Locator.ScreenshotOptions()
                 .setPath(path));
         return path.toFile();
+    }
+
+    public static Student getStudentInfo(Page page) {
+        String baseUrl = "https://jw.educationgroup.cn/ytkjxy_jsxsd/framework/xsMain_new.jsp";
+        page.navigate(baseUrl);
+        try {
+            String studentInfo =  page.locator(".middletopttxlr").innerText();
+            return StudentParser.parseFromText(studentInfo);
+        } catch (Exception e) {
+            log.error("获取元素失败: {}", e.getMessage());
+            return null;
+        }
     }
 }

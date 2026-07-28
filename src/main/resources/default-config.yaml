@@ -2,7 +2,7 @@
 OCR_API_URL: "https://ddddocr-fastapi.vercel.app/ocr"
 
 browser:                # 浏览器设置
-    headless : false    # 是否使用无头模式
+    headless : true    # 是否使用无头模式
 
 account:
     username: ""        # 账号
