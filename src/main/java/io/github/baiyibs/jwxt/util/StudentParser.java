@@ -1,5 +1,6 @@
 package io.github.baiyibs.jwxt.util;
 
+import cn.hutool.core.text.StrSplitter;
 import io.github.baiyibs.jwxt.model.Student;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,9 +12,9 @@ public class StudentParser {
     public static Student parseFromText(String text) {
         Student student = new Student();
         Map<String, String> map = text.lines()
-                .map(line -> line.split("\\s*[：:]\\s*"))
-                .filter(arr -> arr.length == 2)
-                .collect(Collectors.toMap(arr -> arr[0], arr -> arr[1]));
+                .map(line -> StrSplitter.split(line, "：", 2, true, true))
+                .filter(list -> list.size() == 2)
+                .collect(Collectors.toMap(list -> list.get(0), list -> list.get(1)));
         map.forEach((key, value) -> {
             switch (key) {
                 case "学生姓名":

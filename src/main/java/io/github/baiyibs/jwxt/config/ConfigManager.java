@@ -53,7 +53,7 @@ public class ConfigManager {
             Files.createDirectories(EXTERNAL_PATH.getParent());
             try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream(DEFAULT_RESOURCE)){
                 if (inputStream == null) {
-                    failLoading();
+                    log.error("没有找到默认配置文件: {}", DEFAULT_RESOURCE);
                     throw new IllegalStateException("没有找到默认配置文件: " + DEFAULT_RESOURCE);
                 }
 
@@ -66,10 +66,6 @@ public class ConfigManager {
         } catch (IOException e) {
             throw new RuntimeException("加载配置失败: {}", e);
         }
-    }
-
-    private static void failLoading() {
-        log.error("没有找到默认配置文件: {}", DEFAULT_RESOURCE);
     }
 
     public void save() throws IOException {
