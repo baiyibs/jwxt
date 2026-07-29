@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import io.github.baiyibs.jwxt.util.ConsoleTerminal;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,7 +12,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 @Slf4j
 public class ConfigManager {
@@ -58,11 +58,8 @@ public class ConfigManager {
                 }
 
                 AppConfig newConfig = MAPPER.readValue(inputStream, AppConfig.class);
-                Scanner scanner = new Scanner(System.in);
-                System.out.print("请输入账号: ");
-                newConfig.getAccount().setUsername(scanner.nextLine());
-                System.out.print("请输入密码: ");
-                newConfig.getAccount().setPassword(scanner.nextLine());
+                newConfig.getAccount().setUsername(ConsoleTerminal.readLine("请输入账号: "));
+                newConfig.getAccount().setPassword(ConsoleTerminal.readLine("请输入密码: "));
 
                 saveAndUpdate(newConfig);
             }

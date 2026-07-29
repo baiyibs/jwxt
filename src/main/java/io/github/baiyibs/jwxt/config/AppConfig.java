@@ -16,7 +16,6 @@ public class AppConfig {
     @NoArgsConstructor
     public static class BrowserConfig {
         private boolean headless = true;
-        private int slowMo = 0;
     }
 
     @Data

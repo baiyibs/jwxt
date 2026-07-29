@@ -6,16 +6,16 @@ import io.github.baiyibs.jwxt.config.ConfigManager;
 import io.github.baiyibs.jwxt.config.AppConfig;
 import io.github.baiyibs.jwxt.helper.CaptchaHelper;
 import io.github.baiyibs.jwxt.model.Student;
-import io.github.baiyibs.jwxt.utli.ImageViewer;
-import io.github.baiyibs.jwxt.utli.StudentParser;
+import io.github.baiyibs.jwxt.util.ConsoleTerminal;
+import io.github.baiyibs.jwxt.util.StudentParser;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
-import java.util.Scanner;
 
 @Slf4j
 public class App {
@@ -86,10 +86,12 @@ public class App {
 
         if (code == null) {
             File file = screenshotElement(locator, imagePath);
-            ImageViewer.show(file);
-            System.out.print("请手动输入验证码: ");
-            Scanner scanner = new Scanner(System.in);
-            code = scanner.nextLine();
+            ConsoleTerminal.displayImage(file);
+            try {
+                code = ConsoleTerminal.readLine("请手动输入验证码: ");
+            } catch (IOException e) {
+                log.error("读取输入失败: {}", e.getMessage());
+            }
         }
 
         page.locator("#RANDOMCODE").fill(code);

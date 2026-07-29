@@ -1,4 +1,4 @@
-package io.github.baiyibs.jwxt.utli;
+package io.github.baiyibs.jwxt.util;
 
 import io.github.baiyibs.jwxt.model.Student;
 import lombok.extern.slf4j.Slf4j;

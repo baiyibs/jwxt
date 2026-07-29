@@ -1,28 +1,24 @@
 package io.github.baiyibs.jwxt.service;
 
+import cn.hutool.http.HttpException;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.baiyibs.jwxt.config.ConfigManager;
 import io.github.baiyibs.jwxt.exception.OcrException;
 import io.github.baiyibs.jwxt.model.OcrResponse;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class CaptchaService {
-    private final OkHttpClient client;
+//    private final OkHttpClient client;
     private final ObjectMapper mapper;
     private final String ocrApiUrl;
 
     public CaptchaService() {
-        this.client = new OkHttpClient.Builder()
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .build();
         this.mapper = new ObjectMapper();
         this.ocrApiUrl = ConfigManager.getInstance().getConfig().getOcrApiUrl();
     }
@@ -33,25 +29,14 @@ public class CaptchaService {
      * @return 识别出的验证码字符串
      */
     public String recognize(File imageFile) throws IOException, OcrException {
-        RequestBody fileBody = RequestBody.create(
-                imageFile,
-                MediaType.get("image/png")
-        );
+        try (HttpResponse httpResponse = HttpRequest.post(ocrApiUrl)
+                .form("file", imageFile)
+                .timeout(30000)
+                .execute()) {
 
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("file", imageFile.getName(), fileBody)
-                .build();
-
-        Request request = new Request.Builder()
-                .url(ocrApiUrl)
-                .post(requestBody)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            String responseBody = response.body().string();
-            if (!response.isSuccessful()) {
-                throw new IOException(String.format("HTTP %d: %s", response.code(), responseBody));
+            String responseBody = httpResponse.body();
+            if (responseBody == null || responseBody.isEmpty()) {
+                throw new IOException("OCR 服务没有返回任何数据");
             }
 
             OcrResponse result = mapper.readValue(responseBody, OcrResponse.class);
@@ -60,6 +45,8 @@ public class CaptchaService {
                 throw new OcrException(String.format("请求错误 %d: %s", result.getCode(), result.getMessage()));
             }
             return result.getData();
+        } catch (HttpException e) {
+            throw new IOException("HTTP 请求失败: " + e.getMessage(), e);
         }
     }
 
