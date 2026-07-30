@@ -5,8 +5,10 @@ import io.github.baiyibs.jwxt.config.BrowserConfigLoader;
 import io.github.baiyibs.jwxt.config.ConfigManager;
 import io.github.baiyibs.jwxt.config.AppConfig;
 import io.github.baiyibs.jwxt.helper.CaptchaHelper;
+import io.github.baiyibs.jwxt.model.Course;
 import io.github.baiyibs.jwxt.model.Student;
 import io.github.baiyibs.jwxt.util.ConsoleTerminal;
+import io.github.baiyibs.jwxt.util.CourseParser;
 import io.github.baiyibs.jwxt.util.StudentParser;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -40,6 +43,11 @@ public class App {
             if (student != null) {
                 log.info(student.toString());
             }
+
+            page.navigate("https://jw.educationgroup.cn/ytkjxy_jsxsd/kscj/cjcx_list");
+            String dataList =  page.locator("#dataList").innerText();
+            List<Course> courseList = CourseParser.parseFromText(dataList);
+            courseList.forEach(course -> log.info("{}", course));
 
         } catch (Exception e) {
             log.error("初始化浏览器失败: {}", e.getMessage());
