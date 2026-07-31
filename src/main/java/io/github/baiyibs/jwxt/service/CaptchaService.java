@@ -7,14 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.baiyibs.jwxt.config.ConfigManager;
 import io.github.baiyibs.jwxt.exception.OcrException;
 import io.github.baiyibs.jwxt.model.OcrResponse;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
 
-@Slf4j
 public class CaptchaService {
-//    private final OkHttpClient client;
     private final ObjectMapper mapper;
     private final String ocrApiUrl;
 
