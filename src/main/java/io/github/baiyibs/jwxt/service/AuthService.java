@@ -4,8 +4,11 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.github.baiyibs.jwxt.exception.LoginException;
 import io.github.baiyibs.jwxt.helper.CaptchaHelper;
+import io.github.baiyibs.jwxt.model.Course;
 import io.github.baiyibs.jwxt.model.Student;
+import io.github.baiyibs.jwxt.model.Transcript;
 import io.github.baiyibs.jwxt.util.ConsoleTerminal;
+import io.github.baiyibs.jwxt.util.CourseParser;
 import io.github.baiyibs.jwxt.util.StudentParser;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -98,5 +102,13 @@ public class AuthService {
         locator.screenshot(new Locator.ScreenshotOptions()
                 .setPath(path));
         return path.toFile();
+    }
+
+    public Transcript getTranscript() {
+        String cjcxUrl = "https://jw.educationgroup.cn/ytkjxy_jsxsd/kscj/cjcx_list";
+        page.navigate(cjcxUrl);
+        String dataList =  page.locator("#dataList").innerText();
+        List<Course> courseList = CourseParser.parseFromText(dataList);
+        return new Transcript(this.student, courseList);
     }
 }
