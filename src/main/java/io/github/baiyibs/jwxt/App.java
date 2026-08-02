@@ -25,11 +25,8 @@ public class App {
             authService.login(CONFIG.getAccount().getUsername(), CONFIG.getAccount().getPassword());
 
             Student student = authService.getStudent();
-            if (student != null) {
-                log.info(student.toString());
-            }
             Transcript transcript = authService.getTranscript();
-            log.info("{}", transcript);
+            log.info("{}", transcript.getTotalCredit());
 
         } catch (Exception e) {
             log.error("发生异常: {}", e.getMessage());

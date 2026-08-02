@@ -27,6 +27,8 @@ public class AuthService {
     private boolean isLogin;
     @Getter
     private Student student;
+    @Getter
+    private Transcript transcript;
 
     public AuthService(Page page) {
         this.page = page;
@@ -48,16 +50,15 @@ public class AuthService {
         fillCaptchaCode(page);
         page.locator(".login_btn").click();
 
-        if (Objects.equals(page.title(), "教学一体化服务平台")) {
-            this.isLogin = true;
-            String homeUrl = "https://jw.educationgroup.cn/ytkjxy_jsxsd/framework/xsMain_new.jsp";
-            page.navigate(homeUrl);
-            String innerText =  page.locator(".middletopttxlr").innerText();
-            this.student = StudentParser.parseFromText(innerText);
-            log.info("学生 {} 登录成功", student.getName());
+        this.isLogin = Objects.equals(page.title(), "教学一体化服务平台");
+
+        if (this.isLogin) {
+            setStudent();
+            setTranscript();
+            log.debug("学生 {}({}) 登录成功", student.getName(), student.getId());
         } else {
-            this.isLogin = false;
             this.student = null;
+            this.transcript = null;
             throw new LoginException(username + " 登录失败!");
         }
     }
@@ -104,11 +105,18 @@ public class AuthService {
         return path.toFile();
     }
 
-    public Transcript getTranscript() {
+    private void setStudent() {
+        String homeUrl = "https://jw.educationgroup.cn/ytkjxy_jsxsd/framework/xsMain_new.jsp";
+        page.navigate(homeUrl);
+        String innerText =  page.locator(".middletopttxlr").innerText();
+        this.student = StudentParser.parseFromText(innerText);
+    }
+
+    private void setTranscript() {
         String cjcxUrl = "https://jw.educationgroup.cn/ytkjxy_jsxsd/kscj/cjcx_list";
         page.navigate(cjcxUrl);
         String dataList =  page.locator("#dataList").innerText();
         List<Course> courseList = CourseParser.parseFromText(dataList);
-        return new Transcript(this.student, courseList);
+        this.transcript = new Transcript(this.student, courseList);
     }
 }
