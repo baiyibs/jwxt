@@ -7,6 +7,8 @@ import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.LinkedHashMap;
+
 @Slf4j
 public class PlaywrightManager implements AutoCloseable{
     private final Playwright playwright;
@@ -14,14 +16,13 @@ public class PlaywrightManager implements AutoCloseable{
     @Getter
     private final BrowserContext browserContext;
     @Getter
-    private final Page page;
+    private LinkedHashMap<String, Page> pageList = new LinkedHashMap<>();
 
     public PlaywrightManager(AppConfig config) {
-        this.playwright = Playwright.create();
+        playwright = Playwright.create();
         BrowserType.LaunchOptions launchOptions = BrowserConfigLoader.loadLaunchOptions(config);
-        this.browser = this.playwright.chromium().launch(launchOptions);
-        this.browserContext = Stealth4j.newStealthContext(browser);
-        this.page = browserContext.newPage();
+        browser = playwright.chromium().launch(launchOptions);
+        browserContext = Stealth4j.newStealthContext(browser);
 
         browserContext.onFrameNavigated(frame ->
                 log.info("导航 -> {}", frame.url())
@@ -30,12 +31,24 @@ public class PlaywrightManager implements AutoCloseable{
         log.debug("PlaywrightManager 初始化完成");
     }
 
+    public Page newPage(String pageName) {
+        Page page = browserContext.newPage();
+        pageList.put(pageName, page);
+        return page;
+    }
+
+    public Page getPage(String pageName) {
+        return pageList.get(pageName);
+    }
+
     @Override
     public void close() {
         try {
-            if (page != null) {
-                page.close();
-                log.debug("Page 已关闭");
+            if (pageList != null) {
+                pageList.forEach((pageName, page) -> {
+                    page.close();
+                    log.debug("Page {} 已关闭", pageName);
+                });
             }
             if (browserContext != null) {
                 browserContext.close();
