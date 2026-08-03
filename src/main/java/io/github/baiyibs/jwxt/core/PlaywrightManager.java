@@ -44,10 +44,12 @@ public class PlaywrightManager implements AutoCloseable{
     @Override
     public void close() {
         try {
-            if (pageList != null) {
+            if (!pageList.isEmpty()) {
                 pageList.forEach((pageName, page) -> {
-                    page.close();
-                    log.debug("Page {} 已关闭", pageName);
+                    if (page != null) {
+                        page.close();
+                        log.debug("Page {} 已关闭", pageName);
+                    }
                 });
             }
             if (browserContext != null) {
