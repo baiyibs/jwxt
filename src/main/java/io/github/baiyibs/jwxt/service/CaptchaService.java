@@ -6,7 +6,7 @@ import cn.hutool.http.HttpResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.baiyibs.jwxt.config.ConfigManager;
 import io.github.baiyibs.jwxt.exception.OcrException;
-import io.github.baiyibs.jwxt.model.OcrResponse;
+import io.github.baiyibs.jwxt.model.OcrResult;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class CaptchaService {
                 throw new IOException("OCR 服务没有返回任何数据");
             }
 
-            OcrResponse result = mapper.readValue(responseBody, OcrResponse.class);
+            OcrResult result = mapper.readValue(responseBody, OcrResult.class);
 
             if (result.getCode() != 200) {
                 throw new OcrException(String.format("请求错误 %d: %s", result.getCode(), result.getMessage()));
