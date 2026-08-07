@@ -58,8 +58,8 @@ public class ConfigManager {
                 }
 
                 AppConfig newConfig = MAPPER.readValue(inputStream, AppConfig.class);
-                newConfig.getAccount().setUsername(ConsoleTerminal.readLine("请输入账号: "));
-                newConfig.getAccount().setPassword(ConsoleTerminal.readLine("请输入密码: "));
+                newConfig.getAccount().get(0).setUsername(ConsoleTerminal.readLine("请输入账号: "));
+                newConfig.getAccount().get(0).setUsername(ConsoleTerminal.readLine("请输入密码: "));
 
                 saveAndUpdate(newConfig);
             }
