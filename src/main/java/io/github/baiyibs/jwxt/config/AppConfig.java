@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.LinkedList;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +12,7 @@ public class AppConfig {
     @JsonProperty("OCR_API_URL")
     private String ocrApiUrl;
     private BrowserConfig browser = new BrowserConfig();
-    private List<Account> account;
+    private LinkedList<Account> account;
 
     @Data
     @NoArgsConstructor
