@@ -53,7 +53,6 @@ public class App {
                         Student student = authService.getStudent();
                         Transcript transcript = authService.getTranscript();
                         log.info("{}", transcript.getTotalCredit());
-                        log.debug("获取Page测试: {}", pm.getPage(account.getUsername()));
                     } catch (Exception e) {
                         log.error("发生异常: {}", e.getMessage());
                     }

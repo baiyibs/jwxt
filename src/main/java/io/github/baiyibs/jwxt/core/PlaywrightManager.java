@@ -30,11 +30,6 @@ public class PlaywrightManager implements AutoCloseable{
     
     public PlaywrightManager() {
         browserContext = Stealth4j.newStealthContext(BROWSER);
-
-        browserContext.onFrameNavigated(frame ->
-                log.info("导航 -> {}", frame.url())
-        );
-
         log.debug("新的 BrowserContext 创建成功");
     }
 
