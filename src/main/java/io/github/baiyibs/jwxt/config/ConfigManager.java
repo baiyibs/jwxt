@@ -3,7 +3,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
-import io.github.baiyibs.jwxt.util.ConsoleTerminal;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,6 +11,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Slf4j
 public class ConfigManager {
@@ -57,11 +57,9 @@ public class ConfigManager {
                     throw new IllegalStateException("没有找到默认配置文件: " + DEFAULT_RESOURCE);
                 }
 
-                AppConfig newConfig = MAPPER.readValue(inputStream, AppConfig.class);
-                newConfig.getAccount().get(0).setUsername(ConsoleTerminal.readLine("请输入账号: "));
-                newConfig.getAccount().get(0).setUsername(ConsoleTerminal.readLine("请输入密码: "));
-
-                saveAndUpdate(newConfig);
+                Files.copy(inputStream, EXTERNAL_PATH, StandardCopyOption.REPLACE_EXISTING);
+                log.info("配置文件保存成功，请修改后重新启动程序。");
+                System.exit(0);
             }
         } catch (IOException e) {
             throw new RuntimeException("加载配置失败: {}", e);

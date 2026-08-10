@@ -7,7 +7,6 @@ import io.github.baiyibs.jwxt.helper.CaptchaHelper;
 import io.github.baiyibs.jwxt.model.Course;
 import io.github.baiyibs.jwxt.model.Student;
 import io.github.baiyibs.jwxt.model.Transcript;
-import io.github.baiyibs.jwxt.util.ConsoleTerminal;
 import io.github.baiyibs.jwxt.util.CourseParser;
 import io.github.baiyibs.jwxt.util.StudentParser;
 import lombok.Getter;
@@ -84,17 +83,6 @@ public class AuthService {
             File file = screenshotElement(locator, imagePath);
             return (file.exists() && file.length() > 0) ? file : null;
         }, 4);
-
-        if (code == null) {
-            File file = screenshotElement(locator, imagePath);
-            ConsoleTerminal.displayImage(file);
-            try {
-                code = ConsoleTerminal.readLine("请手动输入验证码: ");
-            } catch (IOException e) {
-                log.error("读取输入失败: {}", e.getMessage());
-                throw new RuntimeException("手动输入验证码失败: ", e);
-            }
-        }
 
         page.locator("#RANDOMCODE").fill(code);
     }

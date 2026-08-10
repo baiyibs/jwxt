@@ -33,7 +33,7 @@ public class App {
         AtomicInteger threadNumber = new AtomicInteger(1);
         ExecutorService executor = Executors.newFixedThreadPool(5, runnable -> {
             Thread thread = new Thread(runnable);
-            thread.setName("Playwright-Worker-" + threadNumber.getAndIncrement());
+            thread.setName("Task-" + threadNumber.getAndIncrement());
             return thread;
         });
 
@@ -49,6 +49,7 @@ public class App {
                             authService.login(account.getUsername(), account.getPassword());
                         } catch (LoginException e) {
                             log.error("{}", e.getMessage());
+                            Thread.currentThread().interrupt();
                         }
                         Student student = authService.getStudent();
                         Transcript transcript = authService.getTranscript();
