@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.1](https://github.com/baiyibs/jwxt/compare/v1.0.0...v1.0.1) (2026-08-10)
+
+
+### 🔧 Chores
+
+* **master:** release 1.0.1-SNAPSHOT ([230f90b](https://github.com/baiyibs/jwxt/commit/230f90bd569afd85d2287e44284d0bf886ea8096))
+* **master:** release 1.0.1-SNAPSHOT ([07cb8ac](https://github.com/baiyibs/jwxt/commit/07cb8ac4c25a7baecb7bc953478448a341aabe62))
+* 修改自动发版配置 ([4363ab2](https://github.com/baiyibs/jwxt/commit/4363ab2dcc33dfaa5334068ae91397efc3bdfc12))
+
 ## 1.0.0 (2026-08-10)
 
 
