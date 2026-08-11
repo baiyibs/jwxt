@@ -41,15 +41,22 @@ public class App {
             List<CompletableFuture<Void>> futures = new ArrayList<>();
             for (AppConfig.Account account : accountList) {
                 futures.add(CompletableFuture.runAsync(() -> {
+                    String username = account.getUsername();
+                    String password = account.getPassword();
+                    if (username.isEmpty() || password.isEmpty()) {
+                        log.error("账号或密码为空!");
+                        return;
+                    }
+
                     try (PlaywrightManager pm = new PlaywrightManager()) {
                         Page page = pm.newPage(account.getUsername());
                         // 登录
                         AuthService authService = new AuthService(page);
                         try {
-                            authService.login(account.getUsername(), account.getPassword());
+                            authService.login(username, password);
                         } catch (LoginException e) {
                             log.error("{}", e.getMessage());
-                            Thread.currentThread().interrupt();
+                            return;
                         }
                         Student student = authService.getStudent();
                         Transcript transcript = authService.getTranscript();
