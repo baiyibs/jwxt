@@ -20,7 +20,7 @@ public class ConfigManager {
             .enable(SerializationFeature.INDENT_OUTPUT);
 
     private static final String DEFAULT_RESOURCE = "default-config.yaml";
-    private final Path EXTERNAL_PATH = Paths.get(System.getProperty("user.dir"), "config", "config.yaml");
+    private final Path EXTERNAL_PATH = Paths.get(System.getProperty("config.dir", System.getProperty("user.dir")), "config", "config.yaml").toAbsolutePath();
 
     private static volatile ConfigManager instance;
     @Getter
