@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.0](https://github.com/baiyibs/jwxt/compare/v1.1.0...v1.2.0) (2026-08-11)
+
+
+### ✨ Features
+
+* 在配置文件中同步更新版本号 ([c74d2e6](https://github.com/baiyibs/jwxt/commit/c74d2e69f94796adc1e7da1b918d17ad568338d6))
+
+
+### 🐛 Bug Fixes
+
+* 修复异步任务中线程中断失败的问题 ([f069e38](https://github.com/baiyibs/jwxt/commit/f069e3833f4b115f55fb266e8461aea03177f953))
+
+
+### ♻️ Code Refactoring
+
+* 移除 Kotlin 支持，恢复为纯 Java 项目 ([473737b](https://github.com/baiyibs/jwxt/commit/473737b6be6cb0bb0c0beeb75f35025779f1b9ea))
+
 ## [1.1.0](https://github.com/baiyibs/jwxt/compare/v1.0.2...v1.1.0) (2026-08-10)
 
 
