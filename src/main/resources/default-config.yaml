@@ -5,4 +5,4 @@ account:
     password: ''
 base:
   OCR_API_URL: https://api.baiyidev.online/ocr
-  version: 1.2.1-SNAPSHOT
+  version: "${project.version}"
