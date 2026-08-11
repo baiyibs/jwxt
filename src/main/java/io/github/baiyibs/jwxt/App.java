@@ -1,8 +1,8 @@
 package io.github.baiyibs.jwxt;
 
-import com.microsoft.playwright.*;
-import io.github.baiyibs.jwxt.config.ConfigManager;
+import com.microsoft.playwright.Page;
 import io.github.baiyibs.jwxt.config.AppConfig;
+import io.github.baiyibs.jwxt.config.ConfigManager;
 import io.github.baiyibs.jwxt.core.PlaywrightManager;
 import io.github.baiyibs.jwxt.exception.LoginException;
 import io.github.baiyibs.jwxt.model.Student;
