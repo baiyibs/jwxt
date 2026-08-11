@@ -1,9 +1,10 @@
-# OCR 识别服务器 （项目地址: https://github.com/sml2h3/ddddocr-fastapi）
-OCR_API_URL: "https://api.baiyidev.online/ocr"
-
-browser:                # 浏览器设置
-    headless : true    # 是否使用无头模式
+browser:                  # 浏览器设置
+    headless : true       # 是否使用无头模式
 
 account:
     - username: ""        # 账号
       password: ""        # 密码
+
+base:
+  OCR_API_URL: "https://api.baiyidev.online/ocr"
+  version: "1.1.1"

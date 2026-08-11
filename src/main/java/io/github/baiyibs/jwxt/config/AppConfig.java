@@ -9,10 +9,17 @@ import java.util.LinkedList;
 @Data
 @NoArgsConstructor
 public class AppConfig {
-    @JsonProperty("OCR_API_URL")
-    private String ocrApiUrl;
+    private BaseConfig base;
     private BrowserConfig browser = new BrowserConfig();
     private LinkedList<Account> account;
+
+    @Data
+    @NoArgsConstructor
+    public static class BaseConfig {
+        @JsonProperty("OCR_API_URL")
+        private String ocrApiUrl;
+        private String version;
+    }
 
     @Data
     @NoArgsConstructor

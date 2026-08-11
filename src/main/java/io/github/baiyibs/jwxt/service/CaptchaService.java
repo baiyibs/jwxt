@@ -17,7 +17,7 @@ public class CaptchaService {
 
     public CaptchaService() {
         this.mapper = new ObjectMapper();
-        this.ocrApiUrl = ConfigManager.getInstance().getConfig().getOcrApiUrl();
+        this.ocrApiUrl = ConfigManager.getInstance().getConfig().getBase().getOcrApiUrl();
     }
 
     /**
