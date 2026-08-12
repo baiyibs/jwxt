@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/baiyibs/jwxt/compare/v1.2.2...v1.2.3) (2026-08-12)
+
+
+### ⏪ Reverts
+
+* 回退 googleapis/release-please-action 到 v4 版本 ([40528da](https://github.com/baiyibs/jwxt/commit/40528da0ffac8c9dd272b6bd226f20213de80285))
+
 ## [1.2.2](https://github.com/baiyibs/jwxt/compare/v1.2.1...v1.2.2) (2026-08-12)
 
 
