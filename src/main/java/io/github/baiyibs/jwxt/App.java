@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 public class App {
-    private static final AppConfig CONFIG;
+    public static final AppConfig CONFIG;
 
     static {
         CONFIG = ConfigManager.getInstance().getConfig();

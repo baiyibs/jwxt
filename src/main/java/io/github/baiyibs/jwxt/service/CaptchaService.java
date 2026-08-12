@@ -4,7 +4,7 @@ import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.baiyibs.jwxt.config.ConfigManager;
+import io.github.baiyibs.jwxt.App;
 import io.github.baiyibs.jwxt.exception.OcrException;
 import io.github.baiyibs.jwxt.model.OcrResult;
 
@@ -17,7 +17,7 @@ public class CaptchaService {
 
     public CaptchaService() {
         this.mapper = new ObjectMapper();
-        this.ocrApiUrl = ConfigManager.getInstance().getConfig().getBase().getOcrApiUrl();
+        this.ocrApiUrl = App.CONFIG.getBase().getOcrApiUrl();
     }
 
     /**

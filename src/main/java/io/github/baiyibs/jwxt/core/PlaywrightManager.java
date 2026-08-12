@@ -1,9 +1,8 @@
 package io.github.baiyibs.jwxt.core;
 
 import com.microsoft.playwright.*;
-import io.github.baiyibs.jwxt.config.AppConfig;
+import io.github.baiyibs.jwxt.App;
 import io.github.baiyibs.jwxt.config.BrowserConfigLoader;
-import io.github.baiyibs.jwxt.config.ConfigManager;
 import io.github.kihdev.playwright.stealth4j.Stealth4j;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +15,8 @@ public class PlaywrightManager implements AutoCloseable{
     private static final Browser BROWSER;
     
     static {
-        AppConfig config = ConfigManager.getInstance().getConfig();
         PLAYWRIGHT = Playwright.create();
-        BrowserType.LaunchOptions launchOptions = BrowserConfigLoader.loadLaunchOptions(config);
+        BrowserType.LaunchOptions launchOptions = BrowserConfigLoader.loadLaunchOptions(App.CONFIG);
         BROWSER = PLAYWRIGHT.chromium().launch(launchOptions);
         log.debug("全局 Browser 初始化完成");
     }
