@@ -5,7 +5,7 @@
         </encoder>
     </appender>
 
-    <root level="DEBUG">
+    <root level="@log.level@">
         <appender-ref ref="CONSOLE" />
     </root>
 </configuration>

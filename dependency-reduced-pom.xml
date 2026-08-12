@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.baiyibs</groupId>
   <artifactId>jwxt</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.1-SNAPSHOT</version>
   <build>
     <resources>
       <resource>
@@ -12,6 +12,15 @@
       </resource>
     </resources>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.6.3</version>
+        <configuration>
+          <mainClass>io.github.baiyibs.jwxt.App</mainClass>
+          <workingDirectory>${project.basedir}/temp</workingDirectory>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.15.0</version>
@@ -58,6 +67,20 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <properties>
+        <log.level>DEBUG</log.level>
+      </properties>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <properties>
+        <log.level>INFO</log.level>
+      </properties>
+    </profile>
+  </profiles>
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
