@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.1](https://github.com/baiyibs/jwxt/compare/v1.2.0...v1.2.1) (2026-08-12)
+
+
+### ♻️ Code Refactoring
+
+* 更改配置文件中版本号的更新方式 ([2f610b5](https://github.com/baiyibs/jwxt/commit/2f610b587c52efc288b05975f2ecfa966c7b3601))
+* 统一使用 App.CONFIG 替代 ConfigManager.getInstance() ([3c0ee20](https://github.com/baiyibs/jwxt/commit/3c0ee20f91dd24b33054a9bf4dabad0a0bfcba46))
+
+
+### 👷 Continuous Integration
+
+* 修改构建配置 ([2f13210](https://github.com/baiyibs/jwxt/commit/2f1321023ab7512b2b0a4853b85d38bd7fc7b0a1))
+
 ## [1.2.0](https://github.com/baiyibs/jwxt/compare/v1.1.0...v1.2.0) (2026-08-11)
 
 
