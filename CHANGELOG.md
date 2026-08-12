@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/baiyibs/jwxt/compare/v1.2.1...v1.2.2) (2026-08-12)
+
+
+### 👷 Continuous Integration
+
+* 修复无法发布附件的问题 ([fb32113](https://github.com/baiyibs/jwxt/commit/fb3211329542ffb8bc8e53e2c306026d646539db))
+
 ## [1.2.1](https://github.com/baiyibs/jwxt/compare/v1.2.0...v1.2.1) (2026-08-12)
 
 
